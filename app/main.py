@@ -22,7 +22,7 @@ from pydantic import BaseModel, Field
 VERSION = "1.0.0"
 SERVICE_NAME = "sm-crm"
 DISPLAY_NAME = "SM CRM"
-DESCRIPTION = "客户关系管理系统"
+DESCRIPTION = "客户关系管理（CRM）：线索、客户、商机、合同与回款"
 ENVIRONMENT = os.getenv("SM_ENV", "development").lower()
 ALLOWED_HOSTS = [h.strip() for h in os.getenv("SM_ALLOWED_HOSTS", "localhost,127.0.0.1,testserver").split(",") if h.strip()]
 REQUESTS = {"total": 0, "errors": 0, "latency_ms_total": 0.0}
@@ -38,7 +38,7 @@ AUDIT_CENTER_URL = os.getenv("SM_AUDIT_CENTER_URL", "")
 INTEGRATION_DEPENDENCIES = ['sm-iam', 'sm-audit-log-center']
 INTEGRATION_EVENTS = ["health.checked", "resource.changed", "audit.recorded"]
 _db_conn: sqlite3.Connection | None = None
-_db_lock = threading.Lock()
+_db_lock = threading.RLock()
 
 
 def db() -> sqlite3.Connection:
@@ -198,7 +198,7 @@ ITEMS: list[dict[str, object]] = [
 async def security_headers(request: Request, call_next):
     started = time.perf_counter()
     request_id = request.headers.get("X-Request-Id") or str(uuid.uuid4())
-    trace_id = request.headers.get("X-Trace-Id") or str(uuid.uuid4())
+    trace_id = request.headers.get("X-Trace-Id") or str(uiduuid.uuid4())
     request.state.request_id = request_id[:64]
     request.state.trace_id = trace_id[:64]
     if request.url.path.startswith("/api/") and request.url.path not in PUBLIC_PATHS and not authorized(request):
