@@ -198,7 +198,7 @@ ITEMS: list[dict[str, object]] = [
 async def security_headers(request: Request, call_next):
     started = time.perf_counter()
     request_id = request.headers.get("X-Request-Id") or str(uuid.uuid4())
-    trace_id = request.headers.get("X-Trace-Id") or str(uiduuid.uuid4())
+    trace_id = request.headers.get("X-Trace-Id") or str(uuid.uuid4())
     request.state.request_id = request_id[:64]
     request.state.trace_id = trace_id[:64]
     if request.url.path.startswith("/api/") and request.url.path not in PUBLIC_PATHS and not authorized(request):
