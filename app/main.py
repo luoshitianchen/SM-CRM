@@ -12,7 +12,7 @@ from pydantic import BaseModel, Field
 from app import base
 
 SERVICE = "sm-crm"
-VERSION = "2.0.0"
+VERSION = "3.0.0"
 NAME = "SM CRM"
 DESCRIPTION = "客户关系管理系统：线索、客户、联系人、商机与跟进活动"
 PORT = 8510
