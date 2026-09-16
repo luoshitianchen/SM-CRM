@@ -11,7 +11,17 @@ from app.core.config import settings
 from app.core.database import init_db
 from app.core.logging import setup_logging
 from app.core.middleware import SecurityMiddleware
-from app.routers import crypto, health, items, meta, metrics
+from app.routers import (
+    crm_contracts,
+    crm_customers,
+    crm_opportunities,
+    crm_payments,
+    crypto,
+    health,
+    items,
+    meta,
+    metrics,
+)
 
 setup_logging()
 
@@ -42,7 +52,10 @@ app.include_router(meta.router)
 app.include_router(crypto.router)
 app.include_router(items.router)
 app.include_router(metrics.router)
-
+app.include_router(crm_customers.router)
+app.include_router(crm_opportunities.router)
+app.include_router(crm_contracts.router)
+app.include_router(crm_payments.router)
 
 
 @app.get("/", include_in_schema=False)
